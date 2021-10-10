@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "plantek",
+  "version": "${version}",
+  "name": "Plantek",
+  "description": "A plant-based tech mod",
+  "authors": [
+    "TeamLlamarama"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/plantek/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "llamarama.team.plantek.client.PlantekClient"
+    ],
+    "main": [
+      "llamarama.team.plantek.Plantek"
+    ]
+  },
+  "mixins": [
+    "plantek.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.1",
+    "fabric": "*",
+    "minecraft": "1.17.1"
+  }
+}
