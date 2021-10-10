@@ -14,6 +14,10 @@ public class PTags {
     public static final Tag<Block> MOUNTAINS_CROP = register("mountains_crops", TagRegistry::block);
     public static final Tag<Block> PLAINS_CROP = register("plains_crops", TagRegistry::block);
 
+    public static void init() {
+        new PBlocks();
+    }
+
     private static <E>Tag<E> register(String path, Function<Identifier, Tag<E>> tags) {
         return tags.apply(new Identifier(PlanTek.MODID, path));
     }

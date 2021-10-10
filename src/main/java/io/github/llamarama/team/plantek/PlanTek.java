@@ -20,9 +20,8 @@ public class PlanTek implements ModInitializer {
     public void onInitialize() {
         LOGGER.info("And you thought plants couldn't get more interesting...");
         LOGGER.info("Oh wait... you didn't think that?!");
-
-        new PBlocks();
-        new PItems();
-        new PTags();
+        PBlocks.init();
+        PItems.init();
+        PTags.init();
     }
 }
