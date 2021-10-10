@@ -1,9 +1,10 @@
 {
     "required": true,
     "minVersion": "0.8",
-    "package": "llamarama.team.plantek.mixin",
+    "package": "io.github.llamarama.team.plantek.mixin",
     "compatibilityLevel": "JAVA_16",
     "mixins": [
+        "MixinCropBlock"
     ],
     "client": [
     ],
