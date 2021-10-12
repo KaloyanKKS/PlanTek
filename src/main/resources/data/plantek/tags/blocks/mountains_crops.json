@@ -1,6 +1,6 @@
 {
-  "replace": false,
-  "values": [
-    "minecraft:potatoes"
-  ]
+    "replace": false,
+    "values": [
+        "minecraft:potatoes"
+    ]
 }

@@ -4,7 +4,6 @@ import io.github.llamarama.team.plantek.common.util.IdBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
