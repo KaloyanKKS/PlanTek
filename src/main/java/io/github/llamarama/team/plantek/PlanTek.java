@@ -1,6 +1,7 @@
 package io.github.llamarama.team.plantek;
 
 import io.github.llamarama.team.plantek.common.register.PBlocks;
+import io.github.llamarama.team.plantek.common.register.PEntities;
 import io.github.llamarama.team.plantek.common.register.PItems;
 import io.github.llamarama.team.plantek.common.register.PTags;
 import net.fabricmc.api.ModInitializer;
@@ -21,6 +22,7 @@ public class PlanTek implements ModInitializer {
         PBlocks.init();
         PItems.init();
         PTags.init();
+        PEntities.init();
 
         LOGGER.info("And you thought plants couldn't get more interesting...");
         LOGGER.info("Oh wait... you didn't think that?!");
