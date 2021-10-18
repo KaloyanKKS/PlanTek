@@ -19,7 +19,7 @@ public class PEntities {
     public PEntities() {
         FabricDefaultAttributeRegistry.register(ANT, AntEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10.0D)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1D)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0D));
     }
 

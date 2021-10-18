@@ -1,9 +1,17 @@
 package io.github.llamarama.team.plantek.common.register;
 
+import io.github.llamarama.team.plantek.block.RootBlock;
 import io.github.llamarama.team.plantek.common.util.IdBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
+import net.fabricmc.fabric.impl.content.registry.FlammableBlockRegistryImpl;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.tag.Tag;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
@@ -13,8 +21,14 @@ public final class PBlocks {
 
     private static final Map<String, Block> REGISTRY = new HashMap<>();
 
-    private static <T extends Block> T register(String id, T block) {
-        PItems.register(id, new BlockItem(block, new FabricItemSettings()));
+    public static final Block ROOT_BLOCK = registerDeco("roots", new RootBlock(AbstractBlock.Settings.of(Material.PLANT)
+                    .breakInstantly()
+                    .ticksRandomly()
+                    .nonOpaque()
+    ));
+
+    private static <T extends Block> T registerDeco(String id, T block) {
+        PItems.register(id, new BlockItem(block, new FabricItemSettings().group(ItemGroup.DECORATIONS)));
 
         return registerNoItem(id, block);
     }
