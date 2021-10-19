@@ -1,3 +1,5 @@
 {
-  "block.plantek.roots" : "Roots"
+  "block.plantek.roots" : "Roots",
+  "block.plantek.loose_soil" : "Loose Soil",
+  "block.plantek.fertile_soil" : "Fertile Soil"
 }
