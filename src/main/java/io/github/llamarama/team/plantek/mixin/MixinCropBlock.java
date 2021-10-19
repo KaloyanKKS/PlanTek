@@ -1,5 +1,6 @@
 package io.github.llamarama.team.plantek.mixin;
 
+import io.github.llamarama.team.plantek.common.register.PBlocks;
 import io.github.llamarama.team.plantek.common.register.PTags;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
@@ -22,7 +23,7 @@ public abstract class MixinCropBlock extends PlantBlock implements Fertilizable 
     public void canPlantOnTop(BlockState floor, BlockView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         Biome.Category category = ((WorldView) world).getBiome(pos).getCategory();
         Biome.Category tagCategory = this.getBiomeCategory();
-        if (category == tagCategory && floor.isOf(Blocks.FARMLAND) && tagCategory != Biome.Category.NONE) {
+        if ((category == tagCategory && floor.isOf(Blocks.FARMLAND) && tagCategory != Biome.Category.NONE) || floor.isOf(PBlocks.FERTILE_SOIL)) {
             cir.setReturnValue(true);
         } else {
             cir.setReturnValue(false);

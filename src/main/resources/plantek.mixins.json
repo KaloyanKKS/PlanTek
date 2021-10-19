@@ -1,14 +1,16 @@
 {
-    "required": true,
-    "minVersion": "0.8",
-    "package": "io.github.llamarama.team.plantek.mixin",
-    "compatibilityLevel": "JAVA_16",
-    "mixins": [
-        "MixinCropBlock"
-    ],
-    "client": [
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.llamarama.team.plantek.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "MixinBoneMealItem",
+    "MixinCropBlock",
+    "MixinSpreadableBlock"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

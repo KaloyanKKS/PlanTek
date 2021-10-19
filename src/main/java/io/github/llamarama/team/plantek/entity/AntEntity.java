@@ -2,6 +2,7 @@ package io.github.llamarama.team.plantek.entity;
 
 import com.google.common.collect.Lists;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.JukeboxBlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
@@ -9,15 +10,20 @@ import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.EnumSet;
 import java.util.List;
 
+// TODO Add cool sounds
 public class AntEntity extends SpiderEntity {
 
     public AntEntity(EntityType<? extends SpiderEntity> entityType, World world) {
@@ -36,7 +42,9 @@ public class AntEntity extends SpiderEntity {
         this.targetSelector.add(2, new AntEntity.TargetGoal<>(this, AnimalEntity.class));
         this.targetSelector.add(1, new AntEntity.StealFoodGoal());
         this.targetSelector.add(1, new AntEntity.StealCropsGoal());
+        this.targetSelector.add(1, new VibeGoal(this));
     }
+
     static class AttackGoal extends MeleeAttackGoal {
         public AttackGoal(AntEntity antEntity) {
             super(antEntity, 1.0D, true);
@@ -189,5 +197,79 @@ public class AntEntity extends SpiderEntity {
             }
 
             return blocks.get(world.random.nextInt(blocks.size()));
+    }
+
+    // Thanks Joe
+    public static class VibeGoal extends Goal {
+        private final AntEntity entity;
+        private Vec3d targetPosVector;
+        private BlockPos targetPos;
+        private JukeboxBlockEntity jukeboxTile;
+        private float extraY = 0f;
+        private boolean reducing = true;
+
+        public VibeGoal(AntEntity entity) {
+            this.entity = entity;
+            this.setControls(EnumSet.of(Control.LOOK, Control.MOVE));
+        }
+
+        @Override
+        public void tick() {
+            this.jukeboxTile = (JukeboxBlockEntity) this.entity.getEntityWorld().getBlockEntity(this.targetPos);
+
+            if (this.jukeboxTile != null && (this.jukeboxTile.getRecord().getItem() != Items.MUSIC_DISC_11 || this.jukeboxTile.getRecord().getItem() != Items.MUSIC_DISC_13)) {
+
+                if (this.extraY <= 0.5f) {
+                    this.reducing = false;
+                } else if (this.extraY > 2.0f) {
+                    this.reducing = true;
+                }
+
+                if (this.reducing) {
+                    this.extraY -= 0.3f;
+                } else {
+                    this.extraY += 0.4f;
+                }
+                this.entity.getLookControl().lookAt(this.targetPosVector.getX(), this.targetPosVector.getY() + this.extraY, this.targetPosVector.getZ());
+                entity.setCustomName(Text.of("Dancing Queen"));
+                entity.setPersistent();
+
+            } else {
+                this.extraY = 0f;
+            }
+        }
+
+        @Override
+        public boolean canStart() {
+
+            BlockPos.Mutable currentPos = new BlockPos.Mutable(this.entity.getPos().getX(), this.entity.getPos().getY(), this.entity.getZ());
+
+            BlockState currentBlock;
+
+            for (int i = (int) this.entity.getPos().getX() - 4; i <= this.entity.getPos().getX() + 4; i++) {
+                for (int j = (int) this.entity.getPos().getY() - 4; j <= this.entity.getPos().getY() + 4; j++) {
+                    for (int k = (int) this.entity.getPos().getZ() - 4; k <= this.entity.getPos().getZ() + 4; k++) {
+                        currentBlock = this.entity.world.getBlockState(currentPos.set(i, j, k));
+
+                        if (currentBlock.getBlock() == Blocks.JUKEBOX) {
+                            this.targetPosVector = new Vec3d(currentPos.getX(), currentPos.getY(), currentPos.getZ());
+                            this.targetPos = currentPos.toImmutable();
+                            this.jukeboxTile = (JukeboxBlockEntity) this.entity.getEntityWorld().getBlockEntity(this.targetPos);
+
+                            if (this.jukeboxTile != null) {
+                                return this.jukeboxTile.getRecord() != ItemStack.EMPTY;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return this.jukeboxTile != null && this.jukeboxTile.getRecord() != ItemStack.EMPTY;
+        }
     }
 }
