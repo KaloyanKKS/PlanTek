@@ -33,7 +33,7 @@ public class LooseSoilBlock extends Block {
         if (!world.isClient) {
             if (random.nextInt(50) == 0) {
                 AntEntity ant = new AntEntity(PEntities.ANT, world);
-                double jumpHeight = random.nextDouble() + 0.1;
+                double jumpHeight = random.nextDouble() + 0.2;
                 world.spawnEntity(ant);
                 world.setBlockState(pos, Blocks.DIRT.getDefaultState());
                 ant.setVelocity(0.0, jumpHeight, 0.0);
@@ -45,9 +45,6 @@ public class LooseSoilBlock extends Block {
 
         if (world.getBlockState(pos.up()).isOf(Blocks.WATER)) {
             world.setBlockState(pos, PBlocks.FERTILE_SOIL.getDefaultState());
-            if (random.nextInt(20) == 0) {
-                world.setBlockState(pos.up(), Blocks.AIR.getDefaultState());
-            }
         }
         super.scheduledTick(state, world, pos, random);
     }

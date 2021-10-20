@@ -44,7 +44,6 @@ public class AntEntity extends SpiderEntity {
         this.targetSelector.add(1, new AntEntity.StealCropsGoal());
         this.targetSelector.add(1, new VibeGoal(this));
     }
-
     static class AttackGoal extends MeleeAttackGoal {
         public AttackGoal(AntEntity antEntity) {
             super(antEntity, 1.0D, true);
